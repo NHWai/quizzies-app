@@ -1,16 +1,15 @@
-import React from "react";
+import { useState, useContext } from "react";
 import SubContainer from "./SubContainer";
 import Btn from "./Btn";
+import Content from "../context/Content";
 
-function Main(props) {
-  const dataEl = props.datas;
-  console.log(dataEl);
-  const [check, setCheck] = React.useState(() => true);
+function Main() {
+  const { data } = useContext(Content);
 
-  const correctAns = dataEl.map((el) => el.correct_answer);
-  const inCorrectAns = dataEl.map((el) => el.incorrect_answers).flat();
+  const correctAns = data.map((el) => el.correct_answer);
+  const inCorrectAns = data.map((el) => el.incorrect_answers).flat();
 
-  const data = dataEl.map((el, idx) => (
+  const datas = data.map((el, idx) => (
     <SubContainer
       key={idx}
       el={el}
@@ -18,29 +17,6 @@ function Main(props) {
       incorrectAns={el.incorrect_answers}
     />
   ));
-
-  function checkAns() {
-    const arr = [...document.querySelectorAll(".select")];
-    const opt = [...document.querySelectorAll(".opt")];
-
-    opt.forEach((el) => {
-      if (correctAns.includes(el.textContent)) {
-        el.classList.add("ans");
-      } else if (
-        el.classList.contains("select") &&
-        inCorrectAns.includes(el.textContent)
-      ) {
-        el.classList.add("wrong");
-      }
-    });
-    arr.forEach((el) => el.classList.remove("select"));
-  }
-
-  function playAgain() {
-    const opt = [...document.querySelectorAll(".opt")];
-    opt.forEach((el) => el.classList.remove("ans"));
-    opt.forEach((el) => el.classList.remove("wrong"));
-  }
 
   return (
     <div className="main">
@@ -76,19 +52,7 @@ function Main(props) {
         />
       </svg>
       <div className="mainContainer">
-        {data}
-        {/* {check ? (
-          <button onClick={checkAns} className="btn-sm">
-            Check Answer
-          </button>
-        ) : (
-          <div className="goBack">
-            <p>Play Again</p>
-            <button onClick={playAgain} className="btn-sm">
-              Checked
-            </button>
-          </div>
-        )} */}
+        {datas}
         <Btn correctAns={correctAns} inCorrectAns={inCorrectAns} />
       </div>
     </div>

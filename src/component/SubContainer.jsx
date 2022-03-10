@@ -7,15 +7,6 @@ function SubContainer(props) {
   arr.splice(ran, 0, el);
   const arr2 = [...arr];
 
-  function parse(str) {
-    const parser = new DOMParser();
-    const decodedString = parser.parseFromString(
-      `<!doctype html><body>${str}`,
-      "text/html"
-    ).body.textContent;
-    return decodedString;
-  }
-
   function isSelected(event) {
     const nodeList = [...event.target.parentElement.childNodes];
     if (event.target.classList.contains("opt")) {
@@ -26,11 +17,11 @@ function SubContainer(props) {
 
   return (
     <div className="subContainer">
-      <p className="quiz-ques">{parse(props.el.question)}</p>
+      <p className="quiz-ques">{props.el.question}</p>
       <div onClick={isSelected} className="opts">
         {arr2.map((el, idx) => (
           <button key={idx} className="opt">
-            {parse(el)}
+            {el}
           </button>
         ))}
       </div>

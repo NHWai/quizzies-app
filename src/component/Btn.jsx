@@ -5,7 +5,6 @@ function Btn(props) {
   const correctAns = props.correctAns;
   const inCorrectAns = props.inCorrectAns;
   const [score, setScore] = React.useState(0);
-  console.log("score", score);
 
   function checkAns() {
     const arr = [...document.querySelectorAll(".select")];
