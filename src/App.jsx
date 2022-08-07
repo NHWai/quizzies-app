@@ -12,7 +12,9 @@ function App() {
 
   return (
     <ContentProvider>
-      <div>{click ? <WelcomePage startQuiz={startQuiz} /> : <Main />}</div>
+      <div>
+        {click ? <WelcomePage startQuiz={startQuiz} /> : <Main />}
+      </div>
     </ContentProvider>
   );
 }

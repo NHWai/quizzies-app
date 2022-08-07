@@ -1,10 +1,13 @@
-import React from "react";
+import { useState, useContext } from "react";
+import Content from "../context/Content";
 
 function Btn(props) {
-  const [check, setCheck] = React.useState(() => true);
+  const [check, setCheck] = useState(() => true);
   const correctAns = props.correctAns;
   const inCorrectAns = props.inCorrectAns;
-  const [score, setScore] = React.useState(0);
+  const [score, setScore] = useState(0);
+
+  const { reFetch } = useContext(Content);
 
   function checkAns() {
     const arr = [...document.querySelectorAll(".select")];
@@ -33,15 +36,23 @@ function Btn(props) {
     const opt = [...document.querySelectorAll(".opt")];
     opt.forEach((el) => el.classList.remove("ans"));
     opt.forEach((el) => el.classList.remove("wrong"));
+    if (score == 5) {
+      reFetch();
+    }
     setCheck(true);
     setScore(0);
   }
 
   if (check)
     return (
-      <button onClick={checkAns} className="btn-sm">
-        Check Answer
-      </button>
+      <div className="goBack">
+        <button onClick={checkAns} className="btn-sm">
+          Check Answer
+        </button>
+        <button onClick={reFetch} className="btn-sm">
+          New Quizzs
+        </button>
+      </div>
     );
 
   if (!check)
@@ -49,7 +60,7 @@ function Btn(props) {
       <div className="goBack">
         <p>Your Score {score}/5</p>
         <button onClick={playAgain} className="btn-sm">
-          Play Again
+          {score == 5 ? "New Game" : "Play Again"}
         </button>
       </div>
     );
